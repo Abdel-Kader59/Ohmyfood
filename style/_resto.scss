@@ -1,0 +1,151 @@
+.hero--resto {
+    width: 100%;
+    max-height: 20rem;
+    object-fit: cover;
+}
+
+.main {
+    &--resto {
+    position: relative;
+    top: -2rem;
+    z-index: 10;
+    background-color: $color-bg;
+    border-radius: 2rem 2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(1, 100%);
+    column-gap: 1rem;
+    
+    @media (min-width:1024px) {
+        grid-template-columns: repeat(3, #{((1024 - 2 * 16) / 3)}px);
+    }
+    
+        h1 {
+            margin: 0.75rem 0;
+            flex: 1;
+            display: block;
+        }
+
+        button {
+            margin-top: 1rem;
+            @media (min-width:1024px) {
+                grid-column: 1 / 4;
+            }
+            
+        }
+    }
+
+    &__title {
+        display: flex;
+        @media (min-width:1024px) {
+            grid-column: 1 / 4;
+        }
+    }
+
+    &__heart {
+        @include like;
+        font-size: 2rem;
+    }
+}
+
+.menu {
+
+    &__wrapper {
+        margin-bottom: 1rem;
+
+        h4 {
+            font-size: 1.2rem;
+            margin: 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        article {
+            max-width: 100%;
+            opacity: 0;
+            top: 1rem;
+            position: relative; 
+            display: flex; 
+            margin-bottom: 0.5rem;
+        }
+
+        // Works well but doesn't scale tho
+        @for $i from 2 through 4 {
+            &:nth-of-type(#{$i}) article {
+                @for $x from 1 through 3 {
+                    &:nth-of-type(#{$x}) {
+                        animation: chainappear 1s #{$x * 0.2 + $i * 0.6 - 1}s forwards;
+                    }
+                }
+            } 
+        }
+        
+    }
+    
+    // H4 + description
+    &__article {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: block !important;
+        flex: 1;
+    }
+
+    &__description {
+        font-size: 0.9rem;
+        font-weight: 300;
+        margin: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &__price {
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0 0.75rem 0.75rem 0;
+        margin: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    &__confirm {
+        background-color: $color-tertiary;
+        margin-right: -4rem;
+        width: 4rem ;
+        display: flex;
+        align-items:center;
+        justify-content:center;
+        transition-duration: 0.5s;
+
+        &::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 1rem;
+            color: $color-tertiary;
+            border-radius: 1rem;
+            padding: 5px;
+            background-color: $color-bg;
+            transform: rotate(180deg);
+            transition-duration: 0.5s;
+        }
+    }
+
+    article:hover &__confirm {
+        margin-right: 0rem;
+        
+        &::after {
+            transform: rotate(0);
+        }
+    }
+}
+
+// Chain apparition animation
+@keyframes chainappear {
+    to {
+        opacity: 1;
+        top: 0;
+    }
+}
